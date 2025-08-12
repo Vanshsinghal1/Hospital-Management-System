@@ -15,7 +15,9 @@ const MessageForm = () => {
 
     // Basic validation
     if (!firstName || !email || !message) {
-      toast.error("Please fill in all required fields (First Name, Email, Message).");
+      toast.error(
+        "Please fill in all required fields (First Name, Email, Message)."
+      );
       return;
     }
 
@@ -23,7 +25,7 @@ const MessageForm = () => {
     try {
       await axios
         .post(
-          "http://localhost:4000/api/v1/message/send",
+          "https://hospital-management-system-1-uqcz.onrender.com/api/v1/message/send",
           { firstName, lastName, email, phone, message },
           {
             headers: { "Content-Type": "application/json" },
