@@ -20,24 +20,28 @@ cloudinary.v2.config({
 });
 
 // CORS: allow your frontend origins (dev + deployed)
-const allowedOrigins = [ // local dev frontend
-  "https://hospital-management-system-4ivh.vercel.app" // deployed frontend
+const allowedOrigins = [
+  "https://hospital-management-system-4ivh.vercel.app" // only allow deployed frontend
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin like mobile apps or curl
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS policy: This origin is not allowed."));
+      if (!origin) return callback(null, true); // allow requests without origin (Postman, etc.)
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+      return callback(new Error("CORS policy: This origin is not allowed."));
     },
-    credentials: true, // allow cookies (Access-Control-Allow-Credentials)
+    credentials: true,
   })
 );
+
+// Handle preflight requests explicitly
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 // If you use cookies to store session / auth, parse them
 app.use(cookieParser());
