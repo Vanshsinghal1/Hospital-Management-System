@@ -20,8 +20,7 @@ cloudinary.v2.config({
 });
 
 // CORS: allow your frontend origins (dev + deployed)
-const allowedOrigins = [
-  "http://localhost:3000", // local dev frontend
+const allowedOrigins = [ // local dev frontend
   "https://hospital-management-system-4ivh.vercel.app" // deployed frontend
 ];
 
